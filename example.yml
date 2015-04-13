@@ -1,0 +1,19 @@
+# An initial context object to start with.
+context:
+  GREETING: hello
+  SUBJECT: world
+
+# Templates to render. The key is the destination and the value is the source.
+templates:
+  example.txt: example.tpl
+
+# Update the environment. Values are templated.
+env:
+- GREETING=greetings
+- SUBJECT=Mr. {{ .SUBJECT }}
+
+# Configure the executable to launch. Arguments may use Go template syntax. The
+# context is the same as for templates.
+exec:
+- /bin/echo
+- '{{ title .GREETING }}, {{ .SUBJECT }}!'
