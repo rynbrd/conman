@@ -21,8 +21,9 @@ context. The order is as follows:
 
 1. Config file context.
 2. ConMan's environment.
-3. Command line arguments.
-4. Config file environment.
+3. System context.
+4. Command line arguments.
+5. Config file environment.
 
 A consequence of this is that environment variables defined in the config file
 are not available to be used as context to templated environment variables. In
@@ -85,6 +86,20 @@ Environment Variables
 ---------------------
 Environment variables are available as a map under the context name `env`.
 Undeclared environment variables will result in a `<no value>` in the template.
+
+System Context
+--------------
+The system context resides under the context value `sys`. It contains a map
+containing system related values. Currently these values include:
+
+`ipaddress` - The IPv4 address.
+`network` - The IPv4 network in CIDR format.
+`gateway` - The IPv4 default gateway.
+`hostname` - The system's hostname.
+
+The `ipaddress` and `network` values are derived by first determining the
+"primary" interface. This is the interface associated with the first default
+gateway listed in /proc/net/route.
 
 Template Functions
 ------------------
