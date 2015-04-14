@@ -1,16 +1,12 @@
 package main
 
-import (
-	"github.com/peterbourgon/mergemap"
-)
-
 // Context managed a map of context data for use in template rendering.
 type Context map[string]interface{}
 
 // Update the context with additional content. This works by merging the new
 // tree of values with the existing context tree.
 func (c *Context) Update(values map[string]interface{}) {
-	mergemap.Merge(*c, values)
+	Merge(*c, values)
 }
 
 // Map returns the context as a map suitable for template rendering.
