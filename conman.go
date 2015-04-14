@@ -74,8 +74,16 @@ func main() {
 	}
 
 	// render the templates
-	for dest, src := range config.Templates {
-		if err := (&Template{src, dest}).Render(context.Map()); err != nil {
+	for dst, src := range config.Templates {
+		renderedDst, err := RenderString(dst, context.Map())
+		if err != nil {
+			Fatal("%s\n", err)
+		}
+		renderedSrc, err := RenderString(src, context.Map())
+		if err != nil {
+			Fatal("%s\n", err)
+		}
+		if err := (&Template{renderedSrc, renderedDst}).Render(context.Map()); err != nil {
 			Fatal("%s\n", err)
 		}
 	}

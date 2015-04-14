@@ -61,6 +61,7 @@ useful for default values.
 
 The `templates` section contains a map of templates. The keys are the
 destination to write the rendered template to while the value is the source.
+The keys and values themselves may be templated.
 
 The `env` sections contains a list of environment variables to set for the
 exec'd binary. These values may be templated. 
