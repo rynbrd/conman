@@ -1,1 +1,1 @@
-{{ title .GREETING }}, {{ .SUBJECT }}!
+{{ title .env.GREETING }}, {{ .env.SUBJECT }}!

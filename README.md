@@ -19,8 +19,8 @@ command line arguments. The templates are rendered prior to calling `exec`.
 Is it important to make note of the order in which values are added to the
 context. The order is as follows:
 
-1. ConMan's environment.
-2. Config file context.
+1. Config file context.
+2. ConMan's environment.
 3. Command line arguments.
 4. Config file environment.
 
@@ -33,25 +33,39 @@ Config File
 -----------
 The config file is YAML. The following working example describes the structure:
 
-    # An initial context object to start with.
-    context:
-      GREETING: hello
-      SUBJECT: world
+	# An initial context object to start with.
+	context:
+	  nope: but yes
+	  env:
+		GREETING: Hello
+		SUBJECT: world
 
-    # Templates to render. The key is the destination and the value is the source.
-    templates:
-      /tmp/greeting: /tmp/greeting.tpl
+	# Templates to render. The key is the destination and the value is the source.
+	templates:
+	  example.txt: example.tpl
 
-    # Update the environment. Values are templated.
-    env:
-    - GREETING=greetings
-    - SUBJECT=Mr. {{ .SUBJECT }}
+	# Update the environment. Values are templated.
+	env:
+	- GREETING=Greetings
+	- SUBJECT=Mr. {{ title .env.SUBJECT }}
 
-    # Configure the executable to launch. Arguments may use Go template syntax. The
-    # context is the same as for templates.
-    exec:
-    - /bin/echo
-    - '{{ title .GREETING }}, {{ .SUBJECT }}!'
+	# Configure the executable to launch. Arguments may use Go template syntax. The
+	# context is the same as for templates.
+	exec:
+	- /bin/echo
+	- '{{ .env.GREETING }}, {{ .env.SUBJECT }}!'
+
+The `context` section provides and initial context structure. This is most
+useful for default values.
+
+The `templates` section contains a map of templates. The keys are the
+destination to write the rendered template to while the value is the source.
+
+The `env` sections contains a list of environment variables to set for the
+exec'd binary. These values may be templated. 
+
+Lastly the `exec` section is a list of arguments representing the program to be
+exec'd. These values may be templated.
 
 Command Line
 ------------
@@ -62,6 +76,15 @@ The following command line options are recognized:
     -json=JSON      Set context from the provided JSON object.
     -config=FILE    Load configuration from this file. Defaults to
                     /etc/conman.yml.
+
+The `var` and `json` options load values into the context. They may be used to
+initialize values in `sys` and `env` but will be overwritten if those values
+are set by their respective modules.
+
+Environment Variables
+---------------------
+Environment variables are available as a map under the context name `env`.
+Undeclared environment variables will result in a `<no value>` in the template.
 
 Template Functions
 ------------------

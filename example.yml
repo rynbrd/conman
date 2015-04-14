@@ -1,7 +1,9 @@
 # An initial context object to start with.
 context:
-  GREETING: hello
-  SUBJECT: world
+  nope: but yes
+  env:
+    GREETING: Hello
+    SUBJECT: world
 
 # Templates to render. The key is the destination and the value is the source.
 templates:
@@ -9,11 +11,11 @@ templates:
 
 # Update the environment. Values are templated.
 env:
-- GREETING=greetings
-- SUBJECT=Mr. {{ .SUBJECT }}
+- GREETING=Greetings
+- SUBJECT=Mr. {{ title .env.SUBJECT }}
 
 # Configure the executable to launch. Arguments may use Go template syntax. The
 # context is the same as for templates.
 exec:
 - /bin/echo
-- '{{ title .GREETING }}, {{ .SUBJECT }}!'
+- '{{ .env.GREETING }}, {{ .env.SUBJECT }}!'

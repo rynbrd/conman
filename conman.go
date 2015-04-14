@@ -41,7 +41,8 @@ func main() {
 	environ := &Environ{}
 	environ.Load(os.Environ())
 	context := &Context{}
-	context.Update(environ.Context())
+	context.Update(config.Context)
+	context.Update(map[string]interface{}{"env": environ.Context()})
 	context.Update(config.Context)
 	context.Update(vars)
 	context.Update(json)
@@ -55,7 +56,7 @@ func main() {
 		}
 	}
 	environ.Load(renderedEnv)
-	context.Update(environ.Context())
+	context.Update(map[string]interface{}{"env": environ.Context()})
 
 	// render the exec args
 	args := make([]string, len(config.Exec))
