@@ -75,6 +75,15 @@ easier. They are:
 `upper` - Uppercase a string.
 `lower` - Lowercase a string.
 `json` - Works just like `index` but takes a JSON string as the first argument.
+`addrHost` - Get the host part of a host:port formatted address.
+`addrPort` - Get the port part of a host:port formatted address.
+`urlScheme` - Get the scheme part of a URL.
+`urlHost` - Get the host part of a URL. This include the :port if present.
+`urlUsername` - Get the username part of a URL.
+`urlPassword` - Get the password part of a URL.
+`urlRawQuery` - Get the URL's query string.
+`urlQuery` - Get the first value of a query key. Takes `name` as an additional parameter.
+`urlFragment` - Get the fragment part of the URL.
 
 License
 -------
