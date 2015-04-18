@@ -6,6 +6,8 @@ variables, and execute a binary. It is meant to be used as a container's init
 so as to avoid the tedious task of writing a bash script of some sort to do all
 of this for you.
 
+[![Build Status](https://travis-ci.org/BlueDragonX/conman.svg?branch=master)](https://travis-ci.org/BlueDragonX/conman)
+
 Operation
 ---------
 ConMan constructs a context object which is a map of key/value pairs. The
