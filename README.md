@@ -113,7 +113,7 @@ easier. They are:
 `title` - Title case a string.
 `upper` - Uppercase a string.
 `lower` - Lowercase a string.
-`json` - Works just like `index` but takes a JSON string as the first argument.
+`json` - Unmarshal JSON into an object or array.
 `addrHost` - Get the host part of a host:port formatted address.
 `addrPort` - Get the port part of a host:port formatted address.
 `urlScheme` - Get the scheme part of a URL.

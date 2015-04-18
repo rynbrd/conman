@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"bytes"
+	"reflect"
+	"testing"
+)
 
 func TestAddrHost(t *testing.T) {
 	tests := [][2]string{
@@ -187,11 +191,32 @@ func TestURLFragment(t *testing.T) {
 }
 
 func TestJSON(t *testing.T) {
-	data := `{"a":["aye","eh"],"b":"bee"}`
-	want := "eh"
-	if have, err := JSON(data, "a", 1); err != nil {
-		t.Error(err)
-	} else if have != want {
-		t.Errorf("'%s' != '%s'", have, want)
+	wantMap := map[string]interface{}{
+		"a": "aye",
+		"b": "bee",
+		"c": "see",
+	}
+	wantArray := []interface{}{"1", "2", "3"}
+
+	tests := [][2]interface{}{
+		{`{"a":"aye","b":"bee","c":"see"}`, wantMap},
+		{[]byte(`{"a":"aye","b":"bee","c":"see"}`), wantMap},
+		{bytes.NewBufferString(`{"a":"aye","b":"bee","c":"see"}`), wantMap},
+		{`["1", "2", "3"]`, wantArray},
+		{[]byte(`["1", "2", "3"]`), wantArray},
+		{bytes.NewBufferString(`["1", "2", "3"]`), wantArray},
+	}
+
+	for _, test := range tests {
+		if have, err := JSON(test[0]); err == nil {
+			want := test[1]
+			if !reflect.DeepEqual(have, want) {
+				t.Error("output invalid:")
+				t.Errorf("  have: %+v\n", have)
+				t.Errorf("  want: %+v\n", want)
+			}
+		} else {
+			t.Error(err)
+		}
 	}
 }
