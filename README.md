@@ -75,11 +75,10 @@ Command Line
 ------------
 The following command line options are recognized:
 
-    -help           Print the help.
-    -var=NAME=VALUE Set a named value.
-    -json=JSON      Set context from the provided JSON object.
-    -config=FILE    Load configuration from this file. Defaults to
-                    /etc/conman.yml.
+    -help         Print the help.
+    -v NAME=VALUE Set a named value.
+    -j JSON       Set context from the provided JSON object.
+    -c FILE       Load configuration from this file. Defaults to /etc/conman.yml.
 
 The `var` and `json` options load values into the context. They may be used to
 initialize values in `sys` and `env` but will be overwritten if those values

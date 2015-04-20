@@ -22,9 +22,9 @@ func main() {
 	json := JsonVar{}
 	configFile := ""
 	flags := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-	flags.StringVar(&configFile, "config", DefaultConfigFile, "Load configuration from this file.")
-	flags.Var(&vars, "var", "Add a value to the context. Formatted as `name=value`.")
-	flags.Var(&json, "json", "Add the contents of the JsonVar object to the context.")
+	flags.StringVar(&configFile, "c", DefaultConfigFile, "Load configuration from this file.")
+	flags.Var(&vars, "v", "Add a value to the context. Formatted as `name=value`.")
+	flags.Var(&json, "j", "Add the contents of the JSON object to the context.")
 	flags.Parse(os.Args[1:])
 
 	// retrieve configuration
