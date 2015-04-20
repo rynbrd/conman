@@ -95,10 +95,10 @@ System Context
 The system context resides under the context value `sys`. It contains a map
 containing system related values. Currently these values include:
 
-`ipaddress` - The IPv4 address.
-`network` - The IPv4 network in CIDR format.
-`gateway` - The IPv4 default gateway.
-`hostname` - The system's hostname.
+* `ipaddress` - The IPv4 address.
+* `network` - The IPv4 network in CIDR format.
+* `gateway` - The IPv4 default gateway.
+* `hostname` - The system's hostname.
 
 The `ipaddress` and `network` values are derived by first determining the
 "primary" interface. This is the interface associated with the first default
@@ -109,22 +109,24 @@ Template Functions
 A number of template functions have been included to (hopefully) make your life
 easier. They are:
 
-`replace` - String replacement.
-`join` - Join an array of strings.
-`split` - Split a string.
-`title` - Title case a string.
-`upper` - Uppercase a string.
-`lower` - Lowercase a string.
-`json` - Unmarshal JSON into an object or array.
-`addrHost` - Get the host part of a host:port formatted address.
-`addrPort` - Get the port part of a host:port formatted address.
-`urlScheme` - Get the scheme part of a URL.
-`urlHost` - Get the host part of a URL. This include the :port if present.
-`urlUsername` - Get the username part of a URL.
-`urlPassword` - Get the password part of a URL.
-`urlRawQuery` - Get the URL's query string.
-`urlQuery` - Get the first value of a query key. Takes `name` as an additional parameter.
-`urlFragment` - Get the fragment part of the URL.
+* `replace` - String replacement.
+* `join` - Join an array of strings.
+* `split` - Split a string.
+* `title` - Title case a string.
+* `upper` - Uppercase a string.
+* `lower` - Lowercase a string.
+* `trim` - Trim characters a string.
+* `trimSpace` - Trim whitespace from a string.
+* `json` - Unmarshal JSON into an object or array.
+* `addrHost` - Get the host part of a host:port formatted address.
+* `addrPort` - Get the port part of a host:port formatted address.
+* `urlScheme` - Get the scheme part of a URL.
+* `urlHost` - Get the host part of a URL. This include the :port if present.
+* `urlUsername` - Get the username part of a URL.
+* `urlPassword` - Get the password part of a URL.
+* `urlRawQuery` - Get the URL's query string.
+* `urlQuery` - Get the first value of a query key. Takes `name` as an additional parameter.
+* `urlFragment` - Get the fragment part of the URL.
 
 License
 -------
