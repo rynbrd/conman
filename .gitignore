@@ -1,3 +1,5 @@
 *.sw?
+.go
+bin
 conman
 example.txt
