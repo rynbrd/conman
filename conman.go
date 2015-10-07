@@ -45,8 +45,8 @@ func main() {
 	} else {
 		Fatalf("%s\n", err)
 	}
-	context.Update(vars)
-	context.Update(json)
+	context.Update(vars.Context)
+	context.Update(json.Context)
 
 	renderedEnv := make([]string, len(config.Env))
 	for n, envVar := range config.Env {

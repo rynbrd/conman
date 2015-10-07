@@ -8,7 +8,7 @@ import (
 func TestMapVar(t *testing.T) {
 	// empty
 	s := &MapVar{}
-	if len(*s) != 0 {
+	if len(s.Context) != 0 {
 		t.Error("not empty")
 	}
 
@@ -18,10 +18,9 @@ func TestMapVar(t *testing.T) {
 		t.Error(err)
 	}
 	want := map[string]interface{}{"a": "aye"}
-	have := map[string]interface{}(*s)
-	if !reflect.DeepEqual(have, want) {
+	if !reflect.DeepEqual(s.Context, want) {
 		t.Error("value invalid")
-		t.Errorf("  have: %+v", have)
+		t.Errorf("  have: %+v", s.Context)
 		t.Errorf("  want: %+v", want)
 	}
 	if s.String() != "a=aye" {
@@ -37,10 +36,9 @@ func TestMapVar(t *testing.T) {
 		t.Error(err)
 	}
 	want = map[string]interface{}{"a": "aye", "b": "bee"}
-	have = map[string]interface{}(*s)
-	if !reflect.DeepEqual(have, want) {
+	if !reflect.DeepEqual(s.Context, want) {
 		t.Error("value invalid")
-		t.Errorf("  have: %+v", have)
+		t.Errorf("  have: %+v", s.Context)
 		t.Errorf("  want: %+v", want)
 	}
 	haveStr := s.String()
@@ -49,10 +47,10 @@ func TestMapVar(t *testing.T) {
 	}
 }
 
-func TestJsonVar(t *testing.T) {
+func TestJsonVarOneSet(t *testing.T) {
 	// empty
 	j := &JsonVar{}
-	if len(*j) != 0 {
+	if len(j.Context) != 0 {
 		t.Error("not empty")
 	}
 
@@ -63,10 +61,9 @@ func TestJsonVar(t *testing.T) {
 		t.Error(err)
 	}
 	want := map[string]interface{}{"a": "aye", "b": "bee"}
-	have := map[string]interface{}(*j)
-	if !reflect.DeepEqual(have, want) {
+	if !reflect.DeepEqual(j.Context, want) {
 		t.Error("value invalid")
-		t.Errorf("  have: %+v", have)
+		t.Errorf("  have: %+v", j.Context)
 		t.Errorf("  want: %+v", want)
 	}
 
@@ -75,5 +72,29 @@ func TestJsonVar(t *testing.T) {
 	j = &JsonVar{}
 	if err := j.Set(value); err == nil {
 		t.Error("no error")
+	}
+}
+
+func TestJsonVarMultiSet(t *testing.T) {
+	j := &JsonVar{}
+	v1 := `{"a":"aye"}`
+	v2 := `{"b":"bee"}`
+
+	want := map[string]interface{}{"a": "aye"}
+	if err := j.Set(v1); err != nil {
+		t.Error(err)
+	} else if !reflect.DeepEqual(j.Context, want) {
+		t.Error("value invalid")
+		t.Errorf("  have: %+v", j.Context)
+		t.Errorf("  want: %+v", want)
+	}
+
+	want = map[string]interface{}{"a": "aye", "b": "bee"}
+	if err := j.Set(v2); err != nil {
+		t.Error(err)
+	} else if !reflect.DeepEqual(j.Context, want) {
+		t.Error("value invalid")
+		t.Errorf("  have: %+v", j.Context)
+		t.Errorf("  want: %+v", want)
 	}
 }
