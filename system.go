@@ -33,7 +33,7 @@ func System() (map[string]interface{}, error) {
 				if ipnet, ok := addr.(*net.IPNet); ok {
 					if ipv4 := ipnet.IP.To4(); ipv4 != nil {
 						ipv4addr = ipv4.String()
-						ipv4net = (&net.IPNet{ipnet.IP.Mask(ipnet.Mask), ipnet.Mask}).String()
+						ipv4net = (&net.IPNet{IP: ipnet.IP.Mask(ipnet.Mask), Mask: ipnet.Mask}).String()
 						break
 					}
 				}

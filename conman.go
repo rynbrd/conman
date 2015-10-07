@@ -11,7 +11,7 @@ const (
 	DefaultConfigFile = "/etc/conman.yml"
 )
 
-func Fatal(format string, v ...interface{}) {
+func Fatalf(format string, v ...interface{}) {
 	fmt.Fprintf(os.Stderr, format, v...)
 	os.Exit(1)
 }
@@ -30,11 +30,11 @@ func main() {
 	// retrieve configuration
 	config := &Config{}
 	if err := config.Read(configFile); err != nil {
-		Fatal("%s\n", err)
+		Fatalf("%s\n", err)
 	}
 
 	if len(config.Exec) == 0 {
-		Fatal("no exec args\n")
+		Fatalf("no exec args\n")
 	}
 
 	// build the environment and context
@@ -47,7 +47,7 @@ func main() {
 	if sys, err := System(); err == nil {
 		context.Update(map[string]interface{}{"sys": sys})
 	} else {
-		Fatal("%s\n", err)
+		Fatalf("%s\n", err)
 	}
 	context.Update(vars)
 	context.Update(json)
@@ -57,7 +57,7 @@ func main() {
 		if renderedEnvVar, err := RenderString(envVar, context.Map()); err == nil {
 			renderedEnv[n] = renderedEnvVar
 		} else {
-			Fatal("%s\n", err)
+			Fatalf("%s\n", err)
 		}
 	}
 	environ.Load(renderedEnv)
@@ -69,7 +69,7 @@ func main() {
 		if renderedArg, err := RenderString(arg, context.Map()); err == nil {
 			args[n] = renderedArg
 		} else {
-			Fatal("%s\n", err)
+			Fatalf("%s\n", err)
 		}
 	}
 
@@ -77,19 +77,19 @@ func main() {
 	for dst, src := range config.Templates {
 		renderedDst, err := RenderString(dst, context.Map())
 		if err != nil {
-			Fatal("%s\n", err)
+			Fatalf("%s\n", err)
 		}
 		renderedSrc, err := RenderString(src, context.Map())
 		if err != nil {
-			Fatal("%s\n", err)
+			Fatalf("%s\n", err)
 		}
 		if err := (&Template{renderedSrc, renderedDst}).Render(context.Map()); err != nil {
-			Fatal("%s\n", err)
+			Fatalf("%s\n", err)
 		}
 	}
 
 	// exec the command
 	if err := syscall.Exec(args[0], args, environ.Values()); err != nil {
-		Fatal("%s\n", err)
+		Fatalf("%s\n", err)
 	}
 }

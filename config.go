@@ -6,7 +6,7 @@ import (
 )
 
 type Config struct {
-	Context   map[string]interface{} `yaml:context`
+	Context   map[string]interface{} `yaml:"context"`
 	Templates map[string]string
 	Env       []string
 	Exec      []string
