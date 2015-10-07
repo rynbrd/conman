@@ -33,10 +33,6 @@ func main() {
 		Fatalf("%s\n", err)
 	}
 
-	if len(config.Exec) == 0 {
-		Fatalf("no exec args\n")
-	}
-
 	// build the environment and context
 	environ := &Environ{}
 	environ.Load(os.Environ())
@@ -89,7 +85,9 @@ func main() {
 	}
 
 	// exec the command
-	if err := syscall.Exec(args[0], args, environ.Values()); err != nil {
-		Fatalf("%s\n", err)
+	if len(args) > 0 {
+		if err := syscall.Exec(args[0], args, environ.Values()); err != nil {
+			Fatalf("%s\n", err)
+		}
 	}
 }
