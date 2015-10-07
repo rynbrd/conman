@@ -98,3 +98,24 @@ func TestJsonVarMultiSet(t *testing.T) {
 		t.Errorf("  want: %+v", want)
 	}
 }
+
+func TestJsonVarMultiSetArray(t *testing.T) {
+	j := &JsonVar{}
+	v1 := `{"items": [{"name":"a","value":"aye"}]}`
+	v2 := `{"items": [{"name":"b","value":"bee"}]}`
+	if err := j.Set(v1); err != nil {
+		t.Error(err)
+	}
+	if err := j.Set(v2); err != nil {
+		t.Error(err)
+	}
+	want := map[string]interface{}{"items": []interface{}{
+		map[string]interface{}{"name": "a", "value": "aye"},
+		map[string]interface{}{"name": "b", "value": "bee"},
+	}}
+	if !reflect.DeepEqual(j.Context, want) {
+		t.Error("value invalid")
+		t.Errorf("  have: %+v", j.Context)
+		t.Errorf("  want: %+v", want)
+	}
+}
