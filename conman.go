@@ -39,7 +39,6 @@ func main() {
 	context := &Context{}
 	context.Update(config.Context)
 	context.Update(map[string]interface{}{"env": environ.Context()})
-	context.Update(config.Context)
 	if sys, err := System(); err == nil {
 		context.Update(map[string]interface{}{"sys": sys})
 	} else {
