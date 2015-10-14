@@ -37,15 +37,17 @@ func main() {
 	environ := &Environ{}
 	environ.Load(os.Environ())
 	context := &Context{}
-	context.Update(config.Context)
-	context.Update(map[string]interface{}{"env": environ.Context()})
+	context.Update(config.Context, false)
+	context.Update(map[string]interface{}{"env": environ.Context()}, false)
 	if sys, err := System(); err == nil {
-		context.Update(map[string]interface{}{"sys": sys})
+		context.Update(map[string]interface{}{"sys": sys}, false)
 	} else {
 		Fatalf("%s\n", err)
 	}
-	context.Update(vars.Context)
-	context.Update(json.Context)
+	cliCtx := &Context{}
+	cliCtx.Update(vars.Context, true)
+	cliCtx.Update(json.Context, true)
+	context.Update(cliCtx.Map(), true)
 
 	renderedEnv := make([]string, len(config.Env))
 	for n, envVar := range config.Env {
@@ -56,7 +58,7 @@ func main() {
 		}
 	}
 	environ.Load(renderedEnv)
-	context.Update(map[string]interface{}{"env": environ.Context()})
+	context.Update(map[string]interface{}{"env": environ.Context()}, true)
 
 	// render the exec args
 	args := make([]string, len(config.Exec))

@@ -12,11 +12,11 @@ var (
 // Merge recursively merges the src and dst maps. Key conflicts are resolved by
 // preferring src, or recursively descending, if both src and dst are maps.
 // Arrays are merged by appending src to dst.
-func Merge(dst, src map[string]interface{}) map[string]interface{} {
-	return merge(dst, src, 0)
+func Merge(dst, src map[string]interface{}, arrayAppend bool) map[string]interface{} {
+	return merge(dst, src, arrayAppend, 0)
 }
 
-func merge(dst, src map[string]interface{}, depth int) map[string]interface{} {
+func merge(dst, src map[string]interface{}, arrayAppend bool, depth int) map[string]interface{} {
 	if depth > MaxDepth {
 		panic("too deep!")
 	}
@@ -24,13 +24,14 @@ func merge(dst, src map[string]interface{}, depth int) map[string]interface{} {
 		if dstVal, ok := dst[key]; ok {
 			srcMap, srcMapOk := mapify(srcVal)
 			dstMap, dstMapOk := mapify(dstVal)
-			srcArr, srcArrOk := arrayify(srcVal)
-			dstArr, dstArrOk := arrayify(dstVal)
 			if srcMapOk && dstMapOk {
-				srcVal = merge(dstMap, srcMap, depth+1)
-			} else if srcArrOk && dstArrOk {
-				srcVal = append(dstArr, srcArr...)
-			} else {
+				srcVal = merge(dstMap, srcMap, arrayAppend, depth+1)
+			} else if arrayAppend {
+				srcArr, srcArrOk := arrayify(srcVal)
+				dstArr, dstArrOk := arrayify(dstVal)
+				if srcArrOk && dstArrOk {
+					srcVal = append(dstArr, srcArr...)
+				}
 			}
 		}
 		dst[key] = srcVal

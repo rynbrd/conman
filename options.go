@@ -48,7 +48,7 @@ func (v *JsonVar) Set(value string) error {
 	m := map[string]interface{}{}
 	err := json.Unmarshal([]byte(value), &m)
 	if err == nil {
-		v.Context = Merge(v.Context, m)
+		v.Context = Merge(v.Context, m, true)
 	}
 	return err
 }

@@ -17,7 +17,7 @@ func TestContext(t *testing.T) {
 	in := map[string]interface{}{"a": "aye", "b": "bee"}
 	want := map[string]interface{}{"a": "aye", "b": "bee"}
 	c = &Context{}
-	c.Update(in)
+	c.Update(in, true)
 	have = c.Map()
 	if !reflect.DeepEqual(have, want) {
 		t.Error("maps are not equal")
@@ -28,8 +28,8 @@ func TestContext(t *testing.T) {
 	update := map[string]interface{}{"a": "eh"}
 	want = map[string]interface{}{"a": "eh", "b": "bee"}
 	c = &Context{}
-	c.Update(in)
-	c.Update(update)
+	c.Update(in, true)
+	c.Update(update, true)
 	have = c.Map()
 	if !reflect.DeepEqual(have, want) {
 		t.Error("maps are not equal")
@@ -50,8 +50,8 @@ func TestContext(t *testing.T) {
 		"c": []interface{}{"see", "sea"},
 	}
 	c = &Context{}
-	c.Update(in)
-	c.Update(update)
+	c.Update(in, true)
+	c.Update(update, true)
 	have = c.Map()
 	if !reflect.DeepEqual(have, want) {
 		t.Error("maps are not equal")

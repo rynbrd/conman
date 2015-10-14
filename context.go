@@ -5,8 +5,8 @@ type Context map[string]interface{}
 
 // Update the context with additional content. This works by merging the new
 // tree of values with the existing context tree.
-func (c *Context) Update(values map[string]interface{}) {
-	Merge(*c, values)
+func (c *Context) Update(values map[string]interface{}, appendArray bool) {
+	Merge(*c, values, appendArray)
 }
 
 // Map returns the context as a map suitable for template rendering.
