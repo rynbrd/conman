@@ -47,7 +47,7 @@ func main() {
 	cliCtx := &Context{}
 	cliCtx.Update(vars.Context, true)
 	cliCtx.Update(json.Context, true)
-	context.Update(cliCtx.Map(), true)
+	context.Update(cliCtx.Map(), false)
 
 	renderedEnv := make([]string, len(config.Env))
 	for n, envVar := range config.Env {
